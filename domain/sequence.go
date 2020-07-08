@@ -1,6 +1,6 @@
 package domain
 
 type Sequence struct {
-	Start int
-	End   int
+	Start float64
+	End   float64
 }
