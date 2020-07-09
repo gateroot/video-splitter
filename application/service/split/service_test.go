@@ -31,7 +31,7 @@ func TestService_Split(t *testing.T) {
 		}
 		gomock.InOrder(
 			detector.EXPECT().Detect(gomock.Any(), src).Times(1).Return(anl, nil),
-			splitter.EXPECT().Split(gomock.Any(), src, dst, anl).Times(1).Return(nil),
+			splitter.EXPECT().Split(gomock.Any(), src, anl.Sequences, dst).Times(1).Return(nil),
 		)
 
 		ctx := context.Background()
@@ -78,7 +78,7 @@ func TestService_Split(t *testing.T) {
 		}
 		gomock.InOrder(
 			detector.EXPECT().Detect(gomock.Any(), src).Times(1).Return(anl, nil),
-			splitter.EXPECT().Split(gomock.Any(), src, dst, gomock.Any()).Times(1).Return(errors.New("something wrong")),
+			splitter.EXPECT().Split(gomock.Any(), src, gomock.Any(), dst).Times(1).Return(errors.New("something wrong")),
 		)
 
 		ctx := context.Background()

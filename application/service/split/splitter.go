@@ -1,8 +1,11 @@
 //go:generate mockgen -source=$GOFILE -destination=mock_$GOFILE -package=$GOPACKAGE
 package split
 
-import "context"
+import (
+	"context"
+	"video-splitter/domain"
+)
 
 type Splitter interface {
-	Split(ctx context.Context, src, dst string, analysis Analysis) error
+	Split(ctx context.Context, input string, seqs []domain.Sequence, outputDir string) error
 }

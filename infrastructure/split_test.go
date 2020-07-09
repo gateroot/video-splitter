@@ -1,6 +1,7 @@
 package infrastructure
 
 import (
+	"context"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -17,13 +18,15 @@ func TestSplit_Split(t *testing.T) {
 		{Start: 10.325, End: 15.253},
 		{Start: 20.585, End: 25.952},
 	}
+	dst := "hoge"
 
 	gomock.InOrder(
-		encoder.EXPECT().Encode("test.m4v", domain.Sequence{Start: 10.325, End: 15.253}, "test_001.m4v"),
-		encoder.EXPECT().Encode("test.m4v", domain.Sequence{Start: 20.585, End: 25.952}, "test_002.m4v"),
+		encoder.EXPECT().Encode("test.m4v", domain.Sequence{Start: 10.325, End: 15.253}, "hoge/test_001.m4v"),
+		encoder.EXPECT().Encode("test.m4v", domain.Sequence{Start: 20.585, End: 25.952}, "hoge/test_002.m4v"),
 	)
 
-	err := splitter.Split(input, seqs)
+	ctx := context.Background()
+	err := splitter.Split(ctx, input, seqs, dst)
 	assert.NoError(t, err)
 }
 

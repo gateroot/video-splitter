@@ -20,7 +20,7 @@ func (s Service) Split(ctx context.Context, src, dst string) error {
 		return nil
 	}
 
-	err = s.splitter.Split(ctx, src, dst, ana)
+	err = s.splitter.Split(ctx, src, ana.Sequences, dst)
 	if err != nil {
 		return fmt.Errorf("split failed: %w", err)
 	}

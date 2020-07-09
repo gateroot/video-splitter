@@ -2,7 +2,6 @@ package split
 
 import (
 	"context"
-	"errors"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -10,20 +9,23 @@ import (
 )
 
 func TestUseCaseHandler_Handle(t *testing.T) {
-	setup := func() (*usecase.MockFileReader, *usecase.MockSplitService, usecase.SplitUseCase) {
+	setup := func() (*usecase.MockFileChecker, *usecase.MockSplitService, usecase.SplitUseCase) {
 		ctrl := gomock.NewController(t)
-		reader := usecase.NewMockFileReader(ctrl)
+		checker := usecase.NewMockFileChecker(ctrl)
 		service := usecase.NewMockSplitService(ctrl)
-		handler := NewUseCaseHandler(reader, service)
-		return reader, service, handler
+		handler := NewUseCaseHandler(checker, service)
+		return checker, service, handler
 	}
 	src := "/tmp/test.mp4"
 	dst := "/tmp/split"
 
 	t.Run("file exists", func(t *testing.T) {
 		reader, service, handler := setup()
-		exists := reader.EXPECT().Exists(gomock.Any(), src).Times(1).Return(true, nil)
-		service.EXPECT().Split(gomock.Any(), src, dst).After(exists).Times(1).Return(nil)
+		gomock.InOrder(
+			reader.EXPECT().Exists(src).Times(1).Return(true),
+			reader.EXPECT().IsDirectory(dst).Times(1).Return(true),
+			service.EXPECT().Split(gomock.Any(), src, dst).Times(1).Return(nil),
+		)
 
 		ctx := context.Background()
 		err := handler.Handle(ctx, src, dst)
@@ -33,8 +35,11 @@ func TestUseCaseHandler_Handle(t *testing.T) {
 
 	t.Run("file not exist", func(t *testing.T) {
 		reader, service, handler := setup()
-		reader.EXPECT().Exists(gomock.Any(), src).Times(1).Return(false, nil)
-		service.EXPECT().Split(gomock.Any(), src, dst).Times(0).Return(nil)
+		gomock.InOrder(
+			reader.EXPECT().Exists(src).Times(1).Return(false),
+			reader.EXPECT().IsDirectory(dst).Times(0),
+			service.EXPECT().Split(gomock.Any(), src, dst).Times(0),
+		)
 
 		ctx := context.Background()
 		err := handler.Handle(ctx, src, dst)
@@ -42,14 +47,17 @@ func TestUseCaseHandler_Handle(t *testing.T) {
 		assert.NoError(t, err)
 	})
 
-	t.Run("check file exists failed", func(t *testing.T) {
+	t.Run("dst is not directory", func(t *testing.T) {
 		reader, service, handler := setup()
-		reader.EXPECT().Exists(gomock.Any(), src).Times(1).Return(false, errors.New("something wrong"))
-		service.EXPECT().Split(gomock.Any(), src, dst).Times(0).Return(nil)
+		gomock.InOrder(
+			reader.EXPECT().Exists(src).Times(1).Return(true),
+			reader.EXPECT().IsDirectory(dst).Times(1).Return(false),
+			service.EXPECT().Split(gomock.Any(), src, dst).Times(0),
+		)
 
 		ctx := context.Background()
 		err := handler.Handle(ctx, src, dst)
 
-		assert.Error(t, err)
+		assert.NoError(t, err)
 	})
 }

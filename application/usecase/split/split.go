@@ -8,23 +8,26 @@ import (
 )
 
 type UseCaseHandler struct {
-	fileReader   usecase.FileReader
+	fileChecker  usecase.FileChecker
 	splitService service.SplitService
 }
 
 func (u UseCaseHandler) Handle(ctx context.Context, src, dst string) error {
-	b, err := u.fileReader.Exists(ctx, src)
-	if err != nil {
-		return fmt.Errorf("check file exists failed: %w", err)
+	if !u.fileChecker.Exists(src) {
+		return fmt.Errorf("input file not exist: %s\n", src)
 	}
 
-	if b {
-		u.splitService.Split(ctx, src, dst)
+	if !u.fileChecker.IsDirectory(dst) {
+		return fmt.Errorf("dst is not directory: %s\n", dst)
+	}
+
+	if err := u.splitService.Split(ctx, src, dst); err != nil {
+		return fmt.Errorf("split file failed: %w", err)
 	}
 
 	return nil
 }
 
-func NewUseCaseHandler(fileReader usecase.FileReader, splitService service.SplitService) *UseCaseHandler {
-	return &UseCaseHandler{fileReader: fileReader, splitService: splitService}
+func NewUseCaseHandler(fileChecker usecase.FileChecker, splitService service.SplitService) *UseCaseHandler {
+	return &UseCaseHandler{fileChecker: fileChecker, splitService: splitService}
 }
