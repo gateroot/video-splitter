@@ -44,7 +44,7 @@ func TestUseCaseHandler_Handle(t *testing.T) {
 		ctx := context.Background()
 		err := handler.Handle(ctx, src, dst)
 
-		assert.NoError(t, err)
+		assert.Error(t, err)
 	})
 
 	t.Run("dst is not directory", func(t *testing.T) {
@@ -58,6 +58,6 @@ func TestUseCaseHandler_Handle(t *testing.T) {
 		ctx := context.Background()
 		err := handler.Handle(ctx, src, dst)
 
-		assert.NoError(t, err)
+		assert.Error(t, err)
 	})
 }
