@@ -1,12 +1,12 @@
 package di
 
 import (
-	"video-splitter/application/service/split"
-	"video-splitter/application/usecase"
-	split2 "video-splitter/application/usecase/split"
-	"video-splitter/infrastructure"
-	detector2 "video-splitter/infrastructure/detector"
-	encoder2 "video-splitter/infrastructure/encoder"
+	"github.com/gateroot/video-splitter/application/service/split"
+	"github.com/gateroot/video-splitter/application/usecase"
+	split2 "github.com/gateroot/video-splitter/application/usecase/split"
+	"github.com/gateroot/video-splitter/infrastructure"
+	detector2 "github.com/gateroot/video-splitter/infrastructure/detector"
+	encoder2 "github.com/gateroot/video-splitter/infrastructure/encoder"
 )
 
 func InjectSplitUseCase() usecase.SplitUseCase {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"path/filepath"
-	"video-splitter/domain"
+	"github.com/gateroot/video-splitter/domain"
 )
 
 type Split struct {

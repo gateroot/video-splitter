@@ -3,8 +3,8 @@ package split
 import (
 	"context"
 	"fmt"
-	"video-splitter/application/service"
-	"video-splitter/application/usecase"
+	"github.com/gateroot/video-splitter/application/service"
+	"github.com/gateroot/video-splitter/application/usecase"
 )
 
 type UseCaseHandler struct {

@@ -5,7 +5,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
-	"video-splitter/application/usecase"
+	"github.com/gateroot/video-splitter/application/usecase"
 )
 
 func TestUseCaseHandler_Handle(t *testing.T) {

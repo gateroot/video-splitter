@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"regexp"
 	"strconv"
-	"video-splitter/infrastructure"
+	"github.com/gateroot/video-splitter/infrastructure"
 )
 
 type FFmpegDetector struct {

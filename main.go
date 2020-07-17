@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "video-splitter/cmd"
+import "github.com/gateroot/video-splitter/cmd"
 
 func main() {
 	cmd.Execute()

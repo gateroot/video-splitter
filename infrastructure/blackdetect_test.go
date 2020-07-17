@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/stretchr/testify/assert"
 	"testing"
-	"video-splitter/application/service/split"
-	"video-splitter/domain"
+	"github.com/gateroot/video-splitter/application/service/split"
+	"github.com/gateroot/video-splitter/domain"
 )
 
 func TestBlackDetector_Detect(t *testing.T) {

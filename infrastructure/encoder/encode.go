@@ -3,7 +3,7 @@ package encoder
 import (
 	"os/exec"
 	"strconv"
-	"video-splitter/domain"
+	"github.com/gateroot/video-splitter/domain"
 )
 
 type FFmpegEncoder struct {

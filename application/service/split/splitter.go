@@ -3,7 +3,7 @@ package split
 
 import (
 	"context"
-	"video-splitter/domain"
+	"github.com/gateroot/video-splitter/domain"
 )
 
 type Splitter interface {

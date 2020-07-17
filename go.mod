@@ -1,4 +1,4 @@
-module video-splitter
+module github.com/gateroot/video-splitter
 
 go 1.14
 

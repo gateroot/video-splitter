@@ -5,7 +5,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
-	"video-splitter/domain"
+	"github.com/gateroot/video-splitter/domain"
 )
 
 func TestSplit_Split(t *testing.T) {

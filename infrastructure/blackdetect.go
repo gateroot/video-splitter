@@ -2,8 +2,8 @@ package infrastructure
 
 import (
 	"context"
-	"video-splitter/application/service/split"
-	"video-splitter/domain"
+	"github.com/gateroot/video-splitter/application/service/split"
+	"github.com/gateroot/video-splitter/domain"
 )
 
 type BlackDetector struct {

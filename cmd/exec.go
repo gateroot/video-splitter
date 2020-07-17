@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
-	"video-splitter/di"
+	"github.com/gateroot/video-splitter/di"
 )
 
 type execOptions struct {
